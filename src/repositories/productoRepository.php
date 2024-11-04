@@ -1,6 +1,6 @@
 <?php
-    require_once '../config/database.php';
-    require_once '../interfaces/productoInterface.php';
+    require_once BASE_PATH.'../config/database.php';
+    require_once BASE_PATH.'../interfaces/productoInterface.php';
 
     class ProductoRepository implements IProducto{
         private $conn;
@@ -42,7 +42,7 @@
         }
 
         public function borrarProducto($idproducto){
-            $sql = 'DELETE FROM productos WHERE id_producto  = :idproducto';
+            $sql = 'DELETE FROM productos WHERE idproducto  = :idproducto';
             $resultado = $this->conn->prepare($sql);
             $resultado->bindParam(':idproducto', $idproducto);
             if($resultado->execute()){
@@ -62,6 +62,14 @@
             $sql = 'SELECT * FROM productos WHERE nombre = :nombre';
             $resultado = $this->conn->prepare($sql);
             $resultado->bindParam(':nombre', $nombre);
+            $resultado->execute();
+            return $resultado->fetch(PDO::FETCH_ASSOC);
+        }
+
+        public function obtenerProductoPorId($idproducto){
+            $sql = 'SELECT * FROM productos WHERE idproducto = :idproducto';
+            $resultado = $this->conn->prepare($sql);
+            $resultado->bindParam(':idproducto', $idproducto);
             $resultado->execute();
             return $resultado->fetch(PDO::FETCH_ASSOC);
         }

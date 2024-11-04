@@ -1,7 +1,8 @@
 <?php
-    require_once '../repositories/productoRepository.php';
+    require_once BASE_PATH.'../repositories/productoRepository.php';
+    require_once BASE_PATH.'../models/productoModel.php';
 
-    class ProductoControlles {
+    class ProductoController {
         private $productoRpository;
 
         public function __construct() {
@@ -20,6 +21,7 @@
 
         public function actualizarProducto($data){
             $producto = new Producto();
+            $producto ->idproducto = $data['idproducto'];
             $producto->nombre = $data['nombre'];
             $producto->descripcion = $data['descripcion'];
             $producto->tipo = $data['tipo'];
@@ -28,8 +30,8 @@
             return $this->productoRpository->actualizarProducto($producto);
         }
 
-        public function borrarProducto8($idproducto){
-            return $this->productoRpository->borrarProducto($idproducto);
+        public function borrarProducto($idproducto){
+            return $this->productoRpository->borrarProducto($idproducto['id']);
         }
 
         public function obtenerProductos(){
@@ -38,6 +40,9 @@
 
         public function obtenerProductosPorNombre($nombre){
             return $this->productoRpository->obtenerProductosPorNombre($nombre);
+        }
+        public function obtenerProductoPorId($id){
+            return $this->productoRpository->obtenerProductoPorId($id['id']);
         }
     }
 
